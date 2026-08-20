@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 
+const API_URL = "https://banking-backend-94y1.onrender.com";
+
+
 function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -37,10 +40,6 @@ function App() {
   const [transactions, setTransactions] = useState([]);
 
   const [message, setMessage] = useState("");
-
-  // =========================
-  // LOGIN / REGISTER
-  // =========================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,9 +88,8 @@ function App() {
     }
 
     const url = isLogin
-      ? "http://127.0.0.1:8000/login"
-      : "http://127.0.0.1:8000/register";
-
+      ? `${API_URL}/login`
+      : `${API_URL}/register`;
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -129,10 +127,6 @@ function App() {
     }
   };
 
-  // =========================
-  // CREATE ACCOUNT
-  // =========================
-
   const createAccount = async () => {
     if (!accountName || !balance) {
       setMessage("Please fill all fields");
@@ -141,7 +135,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/accounts",
+        `${API_URL}/accounts`,
         {
           method: "POST",
 
@@ -173,14 +167,10 @@ function App() {
     }
   };
 
-  // =========================
-  // GET ACCOUNTS
-  // =========================
-
   const getAccounts = async () => {
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/accounts"
+        `${API_URL}/accounts`
       );
 
       const data = await response.json();
@@ -199,10 +189,6 @@ function App() {
     }
   };
 
-  // =========================
-  // DEPOSIT
-  // =========================
-
   const depositMoney = async () => {
     if (!depositAccount || !depositAmount) {
       setMessage("Please enter account number and amount");
@@ -211,7 +197,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/accounts/${depositAccount}/deposit`,
+        `${API_URL}/accounts/${depositAccount}/deposit`,
         {
           method: "POST",
 
@@ -240,10 +226,6 @@ function App() {
     }
   };
 
-  // =========================
-  // WITHDRAW
-  // =========================
-
   const withdrawMoney = async () => {
     if (!withdrawAccount || !withdrawAmount) {
       setMessage("Please enter account number and amount");
@@ -252,7 +234,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/accounts/${withdrawAccount}/withdraw`,
+        `${API_URL}/accounts/${withdrawAccount}/withdraw`,
         {
           method: "POST",
 
@@ -281,10 +263,6 @@ function App() {
     }
   };
 
-  // =========================
-  // TRANSACTIONS
-  // =========================
-
   const getTransactions = async () => {
     if (!transactionAccount) {
       setMessage("Please enter account number");
@@ -293,7 +271,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/accounts/${transactionAccount}/transactions`
+        `${API_URL}/accounts/${transactionAccount}/transactions`
       );
 
       const data = await response.json();
@@ -315,10 +293,6 @@ function App() {
     }
   };
 
-  // =========================
-  // DELETE ACCOUNT
-  // =========================
-
   const deleteAccount = async (accountNumber) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete account ${accountNumber}?`
@@ -330,7 +304,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/accounts/${accountNumber}`,
+        `${API_URL}/accounts/${accountNumber}`,
         {
           method: "DELETE"
         }
