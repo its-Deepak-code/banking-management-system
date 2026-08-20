@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-const API_URL = "https://banking-backend-94y1.onrender.com";
+const API_URL = "https://banking-backend-api-py.onrender.com";
 
 
 function App() {
